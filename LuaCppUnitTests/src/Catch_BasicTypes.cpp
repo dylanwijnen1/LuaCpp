@@ -59,7 +59,7 @@ TEST_CASE("Basic Types", "[LuaCpp][Basic Types]")
 
 	SECTION("Strings")
 	{
-		var.Set<std::string>("Hello World");
+		var.Set("Hello World");
 		REQUIRE(var.Is<std::string>() == true);
 		REQUIRE(var.Get<std::string>() == "Hello World");
 	}

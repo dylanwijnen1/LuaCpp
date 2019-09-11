@@ -219,7 +219,7 @@ namespace lpp
 
 		/// Calls a function on the LuaVar passing the table as reference.
 		template<typename... Args>
-		LuaVar Call(const char* functionName, Args... args);
+		LuaVar Call(const char* functionName, Args&&... args);
 
 		/// Check wether the current LuaVar reference is a function.
 		bool IsFunction();
@@ -363,7 +363,7 @@ namespace lpp
 	}
 
 	template<typename... Args>
-	inline LuaVar LuaVar::Call(const char* functionName, Args... args)
+	inline LuaVar LuaVar::Call(const char* functionName, Args&&... args)
 	{
 		if (!PushToStack())
 			return LuaVar();
@@ -389,7 +389,7 @@ namespace lpp
 		// Push Arguments
 
 		// C++ 17 Fold Expression on the ',' operator.
-		((void)LuaStack::Push<Args>(L, args), ...);
+		((void)LuaStack::Push<Args>(L, std::forward<Args>(args)), ...);
 
 		int argCount = sizeof...(Args) + 1; // arguments + table.
 		// --
