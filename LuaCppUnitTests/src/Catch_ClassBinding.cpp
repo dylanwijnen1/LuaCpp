@@ -18,7 +18,7 @@ public:
 
 	int MyIntFunc(int a) { return a + m_value; }
 	std::string MyStrFunc() { return m_data; }
-	void MyVoidFunc() { printf("MyClass::MyVoidFunc, Says : Hello"); }
+	void MyVoidFunc() { printf("MyClass::MyVoidFunc, Says : Hello\n"); }
 };
 
 // Must be last to include.
@@ -31,11 +31,13 @@ TEST_CASE("Class Binding", "[LuaCpp][Class Binding]")
 
 	SECTION("Meta Table Binding")
 	{
+		// Binding Code
 		var.CreateMetaTable("MyClass_Meta");
 		var.BindMemberFunction<MyClass>("myIntFunc", &MyClass::MyIntFunc);
 		var.BindMemberFunction<MyClass>("myStrFunc", &MyClass::MyStrFunc);
 		var.BindMemberFunction<MyClass>("myVoidFunc", &MyClass::MyVoidFunc);
 		
+		// Testing Code
 		MyClass cppInstance(10, "Hello");
 
 		lpp::LuaVar instanceTable(&state);

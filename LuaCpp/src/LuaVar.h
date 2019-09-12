@@ -37,7 +37,6 @@ namespace lpp
 		{}
 
 		/// Creates an empty LuaVar.
-		/// <param name="pState"></param>
 		LuaVar(LuaState* pState)
 			: m_pState(pState)
 			, m_luaRef(LUA_NOREF)
@@ -50,37 +49,25 @@ namespace lpp
 		LuaVar& operator=(LuaVar&&) noexcept;
 
 		/// Creates a LuaVar from the stack.
-		/// <param name="pState"></param>
-		/// <param name="index"></param>
 		LuaVar(LuaState* pState, int index);
 
 		/// Creates a LuaVar from a global variable.
-		/// <param name="pState"></param>
-		/// <param name="globalName"></param>
 		LuaVar(LuaState* pState, const char* globalName);
 
-		/// Unregisters the variable from the registry.
+		/// Decrement Reference Count, If last reference then dereference the lua reference.
 		~LuaVar();
 
 #pragma endregion
 
 		/// <summary>
-		/// Puts the global into this lua var
+		/// Reference the global variable.
 		/// </summary>
 		void GetGlobal(const char* globalName);
 
 		/// <summary>
-		/// Creates a global var of this LuaVar
+		/// Pushes the reference to a global.
 		/// </summary>
 		void SetGlobal(const char* globalName);
-
-		///Getter for any templated value.
-		template<typename Type>
-		Type GetValue(const Type& defaultVal = Type()) const;
-
-		///Setter for any templated value.
-		template<typename Type>
-		void SetValue(const Type& value);
 
 #pragma region Getters / Setters, Native Types
 
